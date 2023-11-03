@@ -105,6 +105,9 @@
       const correctAnswer = questions[currentQuestion].answer.toLowerCase();
       if (userAnswer === correctAnswer) {
         score += 10;
+        document.getElementById("result").textContent = "Richtig!";
+      } else {
+        document.getElementById("result").textContent = "Falsch. Die richtige Antwort ist: " + correctAnswer;
       }
       currentQuestion++;
       if (currentQuestion < questions.length) {
