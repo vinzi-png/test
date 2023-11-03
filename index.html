@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IQ-Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    .question {
+      font-size: 24px;
+      margin: 20px;
+    }
+    .answer-input {
+      padding: 5px;
+      font-size: 16px;
+    }
+    .submit-button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>IQ-Test</h1>
+  <div class="question" id="question">Frage: Was ist 127 + 37?</div>
+  <input class="answer-input" type="text" id="answer" placeholder="Antwort eingeben">
+  <button class="submit-button" onclick="checkAnswer()">Antwort senden</button>
+  <div class="result" id="result"></div>
+
+  <script>
+    let currentQuestion = 0;
+    let score = 0;
+    const questions = [
+      { text: "Frage: Was ist 127 + 37?", answer: "164" },
+      { text: "Frage: Wer ist der reichste Mensch der Welt?", answer: "Elon Musk" },
+      { text: "Frage: Was ist das größte Land der welt?", answer: "Russland" },
+    ];
+
+    function checkAnswer() {
+      const userAnswer = document.getElementById("answer").value.toLowerCase();
+      const correctAnswer = questions[currentQuestion].answer.toLowerCase();
+      if (userAnswer === correctAnswer) {
+        score += 10;
+      }
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        document.getElementById("question").textContent = questions[currentQuestion].text;
+        document.getElementById("answer").value = "";
+      } else {
+        document.getElementById("question").textContent = "IQ-Test abgeschlossen! Deine Punktzahl: " + score;
+        document.getElementById("answer").style.display = "none";
+        document.getElementById("result").style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
