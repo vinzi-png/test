@@ -7,16 +7,34 @@
     body {
       font-family: Arial, sans-serif;
       text-align: center;
+      background-color: #f4f4f4;
+    }
+
+    #container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    h1 {
+      color: #007bff;
+      font-size: 32px;
     }
 
     .question {
       font-size: 24px;
-      margin: 20px;
+      margin: 20px 0;
     }
 
     .answer-input {
-      padding: 5px;
-      font-size: 16px;
+      padding: 10px;
+      font-size: 18px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
 
     .submit-button {
@@ -25,17 +43,30 @@
       background-color: #007bff;
       color: #fff;
       border: none;
+      border-radius: 4px;
       cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .submit-button:hover {
+      background-color: #0056b3;
+    }
+
+    .result {
+      font-size: 24px;
+      margin: 20px 0;
     }
   </style>
 </head>
 
 <body>
-  <h1>IQ-Test</h1>
-  <div class="question" id="question">Frage: Was ist 127 + 37?</div>
-  <input class="answer-input" type="text" id="answer" placeholder="Antwort eingeben">
-  <button class="submit-button" onclick="checkAnswer()">Antwort senden</button>
-  <div class="result" id="result"></div>
+  <div id="container">
+    <h1>IQ-Test</h1>
+    <div class="question" id="question">Frage: Was ist 127 + 37?</div>
+    <input class="answer-input" type="text" id="answer" placeholder="Antwort eingeben">
+    <button class="submit-button" onclick="checkAnswer()">Antwort senden</button>
+    <div class="result" id="result"></div>
+  </div>
 
   <script>
     let currentQuestion = 0;
@@ -46,11 +77,11 @@
       { text: "Frage: Was ist das größte Land der Welt?", answer: "Russland" },
       { text: "Welche drei Primzahlen ergeben die Summe 10?", answer: "2,3,5" },
       { text: "Welcher Planet in unserem Sonnensystem ist der fünfte in der Reihenfolge von der Sonne aus gezählt?", answer: "Jupiter" },
-      {text: "Was ist das größte Meer der Welt?", answer: "Pazifik" },
-      {text: "Welcher Fluss ist der längste der Welt?", answer: "Nil" },
-      {text: "Was ist das größte Meer der Welt?", answer: "Pazifik" },
-      {text: "Wie viele Kontinente gibt es auf der Erde?", answer: "7" },
-      {text: "Wie wird der Mond der Erde auch genannt?", answer: "Luna" },
+      { text: "Was ist das größte Meer der Welt?", answer: "Pazifik" },
+      { text: "Welcher Fluss ist der längste der Welt?", answer: "Nil" },
+      { text: "Was ist das größte Meer der Welt?", answer: "Pazifik" },
+      { text: "Wie viele Kontinente gibt es auf der Erde?", answer: "7" },
+      { text: "Wie wird der Mond der Erde auch genannt?", answer: "Luna" },
     ];
 
     function checkAnswer() {
