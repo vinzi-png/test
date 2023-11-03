@@ -7,14 +7,15 @@
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      background-color: #f4f4f4;
+      background-color: #121212; /* Dark Mode Hintergrundfarbe */
+      color: #fff; /* Textfarbe */
     }
 
     #container {
       max-width: 600px;
       margin: 0 auto;
       padding: 20px;
-      background-color: #fff;
+      background-color: #1f1f1f; /* Dark Mode Hintergrundfarbe für den Container */
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
     }
@@ -64,8 +65,8 @@
     <h1>IQ-Test</h1>
     <div class="question" id="question">Frage: Was ist 127 + 37?</div>
     <input class="answer-input" type="text" id="answer" placeholder="Antwort eingeben">
-    <button class="submit-button" onclick="checkAnswer()">Antwort senden</button>
     <div class="result" id="result"></div>
+    <button class="submit-button" onclick="checkAnswer()">Antwort senden</button>
   </div>
 
   <script>
@@ -82,7 +83,7 @@
       { text: "Was ist das größte Meer der Welt?", answer: "Pazifik" },
       { text: "Wie viele Kontinente gibt es auf der Erde?", answer: "7" },
       { text: "Wie wird der Mond der Erde auch genannt?", answer: "Luna" },
-    ];
+    };
 
     function checkAnswer() {
       const userAnswer = document.getElementById("answer").value.toLowerCase();
