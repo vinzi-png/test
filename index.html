@@ -63,62 +63,140 @@
       font-size: 24px;
       margin: 20px 0;
     }
+
+    .timer {
+      font-size: 20px;
+      color: #f00;
+    }
+
+    /* Stil für das Zeitbegrenzungsmenü */
+    #time-menu {
+      margin-top: 20px;
+    }
+
+    #time-limit {
+      width: 60px;
+    }
   </style>
 </head>
 
 <body>
   <div id="container">
     <h1>IQ-Test</h1>
+    <!-- Menü zur Anpassung der Zeitbegrenzung -->
+    <div id="time-menu">
+      <label for="time-limit">Zeitbegrenzung (in Sekunden):</label>
+      <input type="number" id="time-limit" min="10" max="60" step="10">
+      <button onclick="updateTimeLimit()">Aktualisieren</button>
+    </div>
     <div class="question" id="question">Frage: Was ist 127 + 37?</div>
     <input class="answer-input" type="text" id="answer" placeholder="Antwort eingeben">
+    <div class="timer" id="timer"></div>
     <div class="result" id="result"></div>
     <button class="submit-button" onclick="checkAnswer()">Antwort senden</button>
   </div>
 
   <script>
-    let currentQuestion = 0;
+    let currentQuestion;
     let score = 0;
-    const questions = [
-      { text: "Frage: Was ist 127 + 37?", answer: "164" },
-      { text: "Frage: Wer ist der reichste Mensch der Welt?", answer: "Elon Musk" },
-      { text: "Frage: Was ist das größte Land der Welt?", answer: "Russland" },
+    let timer;
+    let timeLimit = 20; // Zeitbegrenzung in Sekunden
+    const totalQuestions = 30; // Gesamtanzahl der Fragen
+    const questions = shuffle([
+      { text: "Was ist 127 + 37?", answer: "164" },
+      { text: "Wer ist der reichste Mensch der Welt?", answer: "Elon Musk" },
+      { text: "Was ist das größte Land der Welt?", answer: "Russland" },
       { text: "Welche drei Primzahlen ergeben die Summe 10?", answer: "2,3,5" },
       { text: "Welcher Planet in unserem Sonnensystem ist der fünfte in der Reihenfolge von der Sonne aus gezählt?", answer: "Jupiter" },
       { text: "Was ist das größte Meer der Welt?", answer: "Pazifik" },
       { text: "Welcher Fluss ist der längste der Welt?", answer: "Nil" },
-      { text: "Was ist das größte Meer der Welt?", answer: "Pazifik" },
       { text: "Wie viele Kontinente gibt es auf der Erde?", answer: "7" },
       { text: "Wie wird der Mond der Erde auch genannt?", answer: "Luna" },
-      { text: "Frage: Was ist 15 geteilt durch 3?", answer: "5" },
-      { text: "Frage: Wie viele Sekunden hat eine Minute?", answer: "60" },
-      { text: "Welches Element hat die Ordnungszahl 1?", answer: "Wasserstoff" },
-      { text: "Wie nennt man die Hauptstadt von Frankreich?", answer: "Paris" },
-      { text: "Wie viele Kontinente gibt es auf der Erde?", answer: "7" },
-      { text: "Was ist die Hauptstadt von Japan?", answer: "Tokio" },
-      { text: "Wie nennt man die Flüssigkeit, die Pflanzen zur Photosynthese verwenden?", answer: "Chlorophyll" },
-      { text: "Welches Tier ist für seinen Streifendrüsen oder 'Stinktier' bekannt, das eine üble Geruchssubstanz absondert, um sich zu verteidigen?", answer: "Stinktier" },
-      { text: "Was ist das Symbol für das chemische Element Sauerstoff?", answer: "O" },
-    ];
+      // Weitere Fragen hinzufügen
+    ]);
+
+    let currentQuestionIndex = 0;
+
+    function shuffle(array) {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
+
+    function getNextQuestion() {
+      if (currentQuestionIndex < totalQuestions) {
+        const question = questions[currentQuestionIndex];
+        currentQuestionIndex++;
+        return question;
+      }
+      return null;
+    }
+
+    function initializeQuestion() {
+      const randomQuestion = getNextQuestion();
+      if (randomQuestion) {
+        document.getElementById("question").textContent = randomQuestion.text;
+        document.getElementById("result").textContent = "";
+        document.getElementById("answer").value = "";
+        startTimer();
+      } else {
+        // Alle Fragen wurden gestellt, der Test ist abgeschlossen.
+        document.getElementById("question").textContent = "IQ-Test abgeschlossen! Deine Punktzahl: " + score;
+        document.getElementById("answer").disabled = true;
+        document.getElementById("submit-button").disabled = true;
+        clearInterval(timer);
+      }
+    }
+
+    function startTimer() {
+      let seconds = timeLimit;
+      const timerElement = document.getElementById("timer");
+      timer = setInterval(function () {
+        timerElement.textContent = `Verbleibende Zeit: ${seconds} Sekunden`;
+        seconds--;
+        if (seconds < 0) {
+          clearInterval(timer);
+          timerElement.textContent = "Zeit abgelaufen!";
+          document.getElementById("answer").disabled = true;
+          document.getElementById("submit-button").disabled = true;
+          document.getElementById("result").textContent = "Falsch. Zeit abgelaufen.";
+          setTimeout(function () {
+            initializeQuestion();
+            document.getElementById("answer").disabled = false;
+            document.getElementById("submit-button").disabled = false;
+          }, 2000); // Warte 2 Sekunden und stelle eine neue Frage
+        }
+      }, 1000);
+    }
 
     function checkAnswer() {
       const userAnswer = document.getElementById("answer").value.toLowerCase();
-      const correctAnswer = questions[currentQuestion].answer.toLowerCase();
+      const correctAnswer = questions[currentQuestionIndex - 1].answer.toLowerCase();
       if (userAnswer === correctAnswer) {
         score += 10;
         document.getElementById("result").textContent = "Richtig!";
       } else {
         document.getElementById("result").textContent = "Falsch. Die richtige Antwort ist: " + correctAnswer;
       }
-      currentQuestion++;
-      if (currentQuestion < questions.length) {
-        document.getElementById("question").textContent = questions[currentQuestion].text;
-        document.getElementById("answer").value = "";
+      clearInterval(timer);
+      initializeQuestion();
+    }
+
+    function updateTimeLimit() {
+      const newTimeLimit = parseInt(document.getElementById("time-limit").value);
+      if (newTimeLimit >= 10 && newTimeLimit <= 60) {
+        timeLimit = newTimeLimit;
+        alert("Zeitbegrenzung aktualisiert: " + timeLimit + " Sekunden");
       } else {
-        document.getElementById("question").textContent = "IQ-Test abgeschlossen! Deine Punktzahl: " + score;
-        document.getElementById("answer").style.display = "none";
-        document.getElementById("result").style.display = "none";
+        alert("Bitte gib eine Zeitbegrenzung zwischen 10 und 60 Sekunden ein.");
       }
     }
+
+    // Initialisiere die erste Frage
+    initializeQuestion();
   </script>
 </body>
 
