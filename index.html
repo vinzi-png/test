@@ -14,7 +14,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
     }
 
     #container {
@@ -24,11 +24,14 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
       width: 100%;
+      text-align: left;
     }
 
     h1 {
       color: #007bff;
       font-size: 32px;
+      margin: 0;
+      padding: 10px 0;
     }
 
     .question {
@@ -53,6 +56,8 @@
       border-radius: 4px;
       cursor: pointer;
       transition: background-color 0.3s;
+      display: block;
+      margin: 20px auto;
     }
 
     .submit-button:hover {
@@ -71,7 +76,8 @@
 
     /* Stil für das Zeitbegrenzungsmenü */
     #time-menu {
-      margin-top: 20px;
+      text-align: right;
+      margin-bottom: 20px;
     }
 
     #time-limit {
@@ -112,7 +118,27 @@
       { text: "Welcher Fluss ist der längste der Welt?", answer: "Nil" },
       { text: "Wie viele Kontinente gibt es auf der Erde?", answer: "7" },
       { text: "Wie wird der Mond der Erde auch genannt?", answer: "Luna" },
-      // Weitere Fragen hinzufügen
+      { text: "Was ist die Hauptstadt von Frankreich?", answer: "Paris" },
+      { text: "Welches Element hat das chemische Symbol 'H'?", answer: "Wasserstoff" },
+      { text: "Wie viele Beine hat eine Spinne?", answer: "8" },
+      { text: "Was ist die Wurzel von 81?", answer: "9" },
+      { text: "In welchem Jahr wurde die Unabhängigkeit der USA erklärt?", answer: "1776" },
+      { text: "Wer schrieb 'Romeo und Julia'?", answer: "William Shakespeare" },
+      { text: "Wie nennt man das Zahlenfach, das sich mit dem Studium von Bevölkerung befasst?", answer: "Demografie" },
+      { text: "Was ist die chemische Formel für Wasser?", answer: "H2O" },
+      { text: "Welches Tier ist das größte auf der Erde?", answer: "Blaudwal" },
+      { text: "Wie nennt man die erste Präsidentin von Deutschland?", answer: "Angela Merkel" },
+      { text: "Wie viele Kontinente beginnen mit dem Buchstaben 'A'?", answer: "2" },
+      { text: "Was ist die Hauptstadt von Japan?", answer: "Tokio" },
+      { text: "Welcher Planet wird auch der 'Morgenstern' oder 'Abendstern' genannt?", answer: "Venus" },
+      { text: "Wie nennt man die Studie von Sternen und Planeten?", answer: "Astronomie" },
+      { text: "Was ist das Symbol für das chemische Element Sauerstoff?", answer: "O" },
+      { text: "Wie viele Quadratzentimeter sind in einem Quadratmeter?", answer: "10,000" },
+      { text: "Wie viele Spieler hat ein Fußballteam auf dem Feld?", answer: "11" },
+      { text: "In welchem Jahr wurde die Berliner Mauer errichtet?", answer: "1961" },
+      { text: "Welches Tier ist das schnellste auf der Erde?", answer: "Gepard" },
+      { text: "Wie nennt man die flüssige Form von Wasser?", answer: "Wasser" },
+      { text: "Wer schrieb das Buch 'Die Odyssee'?", answer: "Homer" }
     ]);
 
     let currentQuestionIndex = 0;
